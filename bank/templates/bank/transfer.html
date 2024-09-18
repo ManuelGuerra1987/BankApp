@@ -1,0 +1,24 @@
+{% extends "bank/layout.html" %}
+
+{% block body %}
+
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %}
+    <div class="transfer">
+        <p>Transfer money</p>
+        <p>Available balance: USD{{usd_account}}</p>
+        <form action="{% url 'transfer' %}" method="post">
+            {% csrf_token %} 
+            <label for="transfer-sender">Sender Account Number:</label><br>
+            <input type="text" id="transfer-sender" name="transfer-sender" value={{account_number}} disabled><br>
+            <label for="transfer-receiver">Receiver Account Number:</label><br>
+            <input type="text" id="transfer-receiver" name="transfer-receiver" placeholder="Account Number"><br>
+            <label for="transfer-receiver-name">Receiver name:</label><br>
+            <input type="text" id="transfer-receiver-name" name="transfer-receiver-name" value="" disabled><br>  
+            <label for="transfer-amount">Amount:</label><br>
+            <input type="text" id="transfer-amount" name="transfer-amount" placeholder="$" min="0" step="0.01" required>
+            <br><br>    
+            <button type="submit" >Done</button>
+    </div>
+{% endblock %}

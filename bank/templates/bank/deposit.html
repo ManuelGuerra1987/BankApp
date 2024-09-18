@@ -1,0 +1,12 @@
+{% extends "bank/layout.html" %}
+
+{% block body %}
+    <div class="deposit">
+        <p>Add money to your account</p>
+        <form action="{% url 'deposit' %}" method="post">
+            {% csrf_token %} 
+        
+            <input name="new_deposit" placeholder="$" type="text">
+            <button type="submit" >Deposit</button>
+    </div>
+{% endblock %}

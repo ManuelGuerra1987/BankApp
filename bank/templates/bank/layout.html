@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Bank{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'bank/styles.css' %}" rel="stylesheet">
+        <script src="{% static 'bank/bank.js' %}"></script>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Bank</a>
+          
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><strong>Signed in as {{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        
+        
+          <div class="container-fluid mt-3">
+            <div class="row">
+                <!-- Sidebar -->
+                {% if user.is_authenticated %}
+                <div class="col-md-2">
+                    <div class="bg-light border-right" id="sidebar-wrapper">
+                        <div class="sidebar-heading">Dashboard</div>
+                        <div class="list-group list-group-flush">
+                            <a href="{% url 'deposit' %}" class="list-group-item list-group-item-action bg-light">Deposit</a>
+                            <a href="{% url 'withdraw' %}" class="list-group-item list-group-item-action bg-light">Withdraw</a>
+                            <a href="{% url 'transfer' %}" class="list-group-item list-group-item-action bg-light">Transfer</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Help</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <!-- Main content -->
+                <div class="col-md-10">
+                    <div class="body">
+                        {% block body %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+
+    </body>
+</html>
