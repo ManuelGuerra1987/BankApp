@@ -12,13 +12,20 @@
         
             <p id="eur_quote">EUR/USD:  </p>
             <button id="eur_quote_button" type="submit" >Quote</button>
-       
+            <br><br>    
         
         <form action="{% url 'eur_exchange' %}" method="post">
             {% csrf_token %} 
 
-            <label for="convert">Amount of USD to convert:</label><br>
-            <input type="text" id="convert" name="convert" placeholder="USD to convert"><br>
+            <div>
+                <select name="currency">
+                    <option disabled selected value="">Select currency to convert</option>
+                    <option value="USDtoEUR">Convert USD to EUR</option>
+                    <option value="EURtoUSD">Convert EUR to USD</option>
+                </select>
+            </div>
+            <label for="amount">Amount to convert:</label><br>
+            <input type="text" id="amount" name="amount" placeholder="Insert amount"><br>
             <input type="hidden" id="exchange_rate_hidden" name="exchange_rate_hidden">
 
             <br><br>    

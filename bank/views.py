@@ -184,7 +184,7 @@ def eur_exchange(request):
         
         try:
             rate = float(request.POST.get('exchange_rate_hidden'))
-            USD_amount_to_convert= float(request.POST.get('convert'))
+            amount_to_convert= float(request.POST.get('amount'))
         except ValueError:
             message = "Quotation or amount not found!"
             return render(request, "bank/eur_exchange.html", 
@@ -193,18 +193,46 @@ def eur_exchange(request):
                            'usd_account': usd_account
                            })
 
-        
-        if USD_amount_to_convert > usd_account:
-            message = "Insufficient funds!"
+        currency = request.POST.get('currency')
+
+        if currency == "USDtoEUR":
+
+            if amount_to_convert > usd_account:
+                message = "Insufficient funds!"
+                return render(request, "bank/eur_exchange.html", 
+                            {'message': message,
+                            'eur_account': eur_account,
+                            'usd_account': usd_account
+                            }) 
+
+            EUR_amount = amount_to_convert/rate
+            user.usd_account = float(usd_account) - amount_to_convert
+            user.eur_account = float(eur_account) + EUR_amount
+            user.save()
+
+            return  HttpResponseRedirect(reverse('index'))     
+
+        elif currency == "EURtoUSD":
+
+            if amount_to_convert > eur_account:
+                message = "Insufficient funds!"
+                return render(request, "bank/eur_exchange.html", 
+                            {'message': message,
+                            'eur_account': eur_account,
+                            'usd_account': usd_account
+                            }) 
+
+            USD_amount = amount_to_convert*rate
+            user.eur_account = float(eur_account) - amount_to_convert
+            user.usd_account = float(usd_account) + USD_amount
+            user.save()
+
+            return  HttpResponseRedirect(reverse('index'))   
+
+        else:
+            message = "Select currency to convert!"
             return render(request, "bank/eur_exchange.html", 
-                          {'message': message,
-                           'eur_account': eur_account,
-                           'usd_account': usd_account
-                           }) 
-
-        EUR_amount = USD_amount_to_convert/rate
-        user.usd_account = float(usd_account) - USD_amount_to_convert
-        user.eur_account = float(eur_account) + EUR_amount
-        user.save()
-
-        return  HttpResponseRedirect(reverse('index'))       
+                        {'message': message,
+                        'eur_account': eur_account,
+                        'usd_account': usd_account
+                        })    
