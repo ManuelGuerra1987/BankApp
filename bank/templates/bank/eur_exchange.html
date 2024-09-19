@@ -1,0 +1,27 @@
+{% extends "bank/layout.html" %}
+
+{% block body %}
+
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %}
+    <div class="transfer">
+        <p>EUR exchange</p>
+        <p>Available balance: USD {{usd_account}}</p>
+        <p>Available balance: EUR {{eur_account}}</p>
+        
+            <p id="eur_quote">EUR/USD:  </p>
+            <button id="eur_quote_button" type="submit" >Quote</button>
+       
+        
+        <form action="{% url 'eur_exchange' %}" method="post">
+            {% csrf_token %} 
+
+            <label for="convert">Amount of USD to convert:</label><br>
+            <input type="text" id="convert" name="convert" placeholder="USD to convert"><br>
+            <input type="hidden" id="exchange_rate_hidden" name="exchange_rate_hidden">
+
+            <br><br>    
+            <button type="submit" >Convert</button>
+    </div>
+{% endblock %}

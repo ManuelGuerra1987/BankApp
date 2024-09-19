@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def login_view(request):
-    if request.method == "POST":
+    if request.method == "POST": 
 
         # Attempt to sign user in
         username = request.POST["username"]
@@ -165,4 +165,46 @@ def get_name(request, receiver_account_number):
         receiver = User.objects.get(account_number=receiver_account_number)
         return JsonResponse({'name': f"{receiver.first_name} {receiver.last_name}"})  
     except User.DoesNotExist:
-        return JsonResponse({'name': None})    
+        return JsonResponse({'name': None})  
+
+@login_required
+def eur_exchange(request):
+
+    user = request.user 
+    usd_account = user.usd_account
+    eur_account = user.eur_account
+
+    if request.method == "GET":     
+        
+        return render(request, "bank/eur_exchange.html", 
+                      {'eur_account': eur_account, 
+                       'usd_account': usd_account}) 
+
+    if request.method == "POST":
+        
+        try:
+            rate = float(request.POST.get('exchange_rate_hidden'))
+            USD_amount_to_convert= float(request.POST.get('convert'))
+        except ValueError:
+            message = "Quotation or amount not found!"
+            return render(request, "bank/eur_exchange.html", 
+                          {'message': message,
+                           'eur_account': eur_account,
+                           'usd_account': usd_account
+                           })
+
+        
+        if USD_amount_to_convert > usd_account:
+            message = "Insufficient funds!"
+            return render(request, "bank/eur_exchange.html", 
+                          {'message': message,
+                           'eur_account': eur_account,
+                           'usd_account': usd_account
+                           }) 
+
+        EUR_amount = USD_amount_to_convert/rate
+        user.usd_account = float(usd_account) - USD_amount_to_convert
+        user.eur_account = float(eur_account) + EUR_amount
+        user.save()
+
+        return  HttpResponseRedirect(reverse('index'))       
