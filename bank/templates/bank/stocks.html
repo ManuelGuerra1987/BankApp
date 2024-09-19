@@ -1,0 +1,25 @@
+{% extends "bank/layout.html" %}
+
+{% block body %}
+
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %}
+    <div class="stocks">
+        <p>Stocks trading</p>
+        <p>Available balance: USD {{usd_account}}</p>
+        
+
+        
+
+
+            <span>Symbol: </span><input type="text" id="stock-symbol" name="symbol" placeholder="Symbol"><br>
+            <span>Price: </span><input type="text" id="stock-price" name="price" disabled><button id="stock-quote-button" type="button" >Check price</button><br>
+            <span>Number of shares: </span><input type="text" id="shares" name="shares" placeholder="Shares"><br>
+
+        <form action="{% url 'stocks' %}" method="post">
+                {% csrf_token %} 
+        </form>    
+
+    </div>
+{% endblock %}

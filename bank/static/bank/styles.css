@@ -46,3 +46,15 @@
     max-width: 600px;
  
 }
+
+.stocks {
+    background-color: #e5e5eeab; 
+    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
+    padding: 5px;
+   
+    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+    width: 100%;
+    max-width: 600px;
+ 
+}

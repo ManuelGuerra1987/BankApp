@@ -12,8 +12,10 @@ urlpatterns = [
     path("withdraw/", views.withdraw, name="withdraw"),
     path("transfer/", views.transfer, name="transfer"),
     path("eur_exchange/", views.eur_exchange, name="eur_exchange"),
+    path("stocks/", views.stocks, name="stocks"),
 
     # API Routes
-    path("get_name/<str:receiver_account_number>", views.get_name, name="get_name")
+    path("get_name/<str:receiver_account_number>", views.get_name, name="get_name"),
+    path("get_stock_price/<str:symbol>", views.get_stock_price, name="get_stock_price")
 
 ]

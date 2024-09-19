@@ -235,4 +235,42 @@ def eur_exchange(request):
                         {'message': message,
                         'eur_account': eur_account,
                         'usd_account': usd_account
-                        })    
+                        })  
+
+
+def get_stock_price(request, symbol):  
+
+    if symbol == "KO":  
+        price = str(round(random.uniform(55.0, 65.0), 2))
+
+    elif symbol == "GOOGL":  
+        price = str(round(random.uniform(130.0, 140.0), 2))
+
+    elif symbol == "AAPL":  
+        price = str(round(random.uniform(170.0, 180.0), 2)) 
+
+    elif symbol == "MSFT":  
+        price = str(round(random.uniform(300.0, 310.0), 2))   
+
+    elif symbol == "AMZN":  
+        price = str(round(random.uniform(130.0, 140.0), 2)) 
+
+    elif symbol == "NVDA":  
+        price = str(round(random.uniform(430.0, 500.0), 2))                                
+
+    return JsonResponse({
+        "price": price,
+        "symbol": symbol
+    })                      
+
+
+@login_required
+def stocks(request):
+
+    user = request.user 
+    usd_account = user.usd_account
+
+    if request.method == "GET":     
+        
+        return render(request, "bank/stocks.html", 
+                      {'usd_account': usd_account}) 
