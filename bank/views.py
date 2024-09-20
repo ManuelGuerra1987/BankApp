@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 import random
-from .models import User
+from .models import User, StockPortfolio
 from django.contrib.auth.decorators import login_required
 
 
@@ -270,7 +270,50 @@ def stocks(request):
     user = request.user 
     usd_account = user.usd_account
 
-    if request.method == "GET":     
+    if request.method == "GET":    
+
+        portfolios = user.portfolios.all() 
         
         return render(request, "bank/stocks.html", 
-                      {'usd_account': usd_account}) 
+                      {'usd_account': usd_account,
+                       'portfolios': portfolios}) 
+    
+    if request.method == "POST": 
+        shares= int(request.POST.get('stock-shares'))
+        price= float(request.POST.get('stock-price'))
+        side= request.POST.get('side')
+        stock_symbol = request.POST.get('stock-symbol')
+
+        if side == "buy":
+
+            if (shares * price) > float(usd_account):
+
+                message = "Insufficient funds!"
+                portfolios = user.portfolios.all()  
+
+                return render(request, "bank/stocks.html", {'message': message,
+                                                            'portfolios': portfolios,
+                                                            'usd_account': usd_account})
+            
+
+            else:
+
+                user.usd_account = float(usd_account) - shares  * price
+                user.save()
+
+                try:
+                    portfolio_item = StockPortfolio.objects.get(user=user, stock_symbol=stock_symbol)
+                    portfolio_item.quantity += shares
+                    portfolio_item.purchase_price = price
+                    portfolio_item.save()
+                except StockPortfolio.DoesNotExist:
+                    portfolio_item = StockPortfolio(user=user, stock_symbol=stock_symbol, quantity=shares, purchase_price=price)  
+                    portfolio_item.save() 
+
+
+                message = f"Purchased {shares} shares of {stock_symbol}." 
+                portfolios = user.portfolios.all()  
+
+                return render(request, "bank/stocks.html", {'message': message,
+                                                            'portfolios': portfolios,
+                                                            'usd_account': usd_account})  

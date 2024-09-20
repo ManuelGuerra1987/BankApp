@@ -56,10 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stocks price
 
     const stockQuoteButton = document.getElementById('stock-quote-button');
-    const stockSymbol = document.getElementById('stock-symbol');
-    const stockPrice = document.getElementById('stock-price');
 
     if (stockQuoteButton) {
+
+        const stockSymbol = document.getElementById('stock-symbol');
+        const stockPrice = document.getElementById('stock-price');
+        const stockPriceHidden = document.getElementById('stock-price-hidden');
+        const stockAmount = document.getElementById('stock-amount');
+        const stockShares = document.getElementById('stock-shares');
 
         stockQuoteButton.addEventListener('click', () => {
 
@@ -67,6 +71,16 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 stockPrice.value = data.price
+                stockPriceHidden.value = data.price
+
+                const price = parseFloat(stockPrice.value);
+                const shares = parseFloat(stockShares.value);
+
+                if (!isNaN(price) && !isNaN(shares)) {
+                    stockAmount.value = (price * shares).toFixed(2);
+                } else {
+                    stockAmount.value = "";
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -75,5 +89,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         });    
+
+        stockShares.addEventListener('input', () => {
+
+            const price = parseFloat(stockPrice.value);
+            const shares = parseFloat(stockShares.value);
+
+            if (!isNaN(price) && !isNaN(shares)) {
+                stockAmount.value = (price * shares).toFixed(2);
+            } else {
+                stockAmount.value = "";
+            }
+        });
+       
     }        
 });                    

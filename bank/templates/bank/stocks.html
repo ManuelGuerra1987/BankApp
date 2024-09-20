@@ -9,17 +9,49 @@
         <p>Stocks trading</p>
         <p>Available balance: USD {{usd_account}}</p>
         
-
-        
-
-
-            <span>Symbol: </span><input type="text" id="stock-symbol" name="symbol" placeholder="Symbol"><br>
-            <span>Price: </span><input type="text" id="stock-price" name="price" disabled><button id="stock-quote-button" type="button" >Check price</button><br>
-            <span>Number of shares: </span><input type="text" id="shares" name="shares" placeholder="Shares"><br>
-
         <form action="{% url 'stocks' %}" method="post">
-                {% csrf_token %} 
+            {% csrf_token %} 
+
+            <span>Symbol: </span><input type="text" id="stock-symbol" name="stock-symbol" placeholder="Symbol"><br>
+            <span>Price: </span><input type="text" id="stock-price"  disabled><button id="stock-quote-button" type="button" >Check price</button><br>
+            <span>Number of shares: </span><input type="number" id="stock-shares" name="stock-shares" placeholder="Shares" min="0" required><br>
+            <span>Total amount: </span><input type="text" id="stock-amount" name="stock-amount" disabled><br>
+            <select name="side">
+                <option disabled selected value="">Select side</option>
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+            </select><br>
+
+            <input type="hidden" id="stock-price-hidden" name="stock-price">
+            <button type="submit">Trade</button>
+
         </form>    
 
+    </div>
+    <br>
+    <div class="stocks">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Stock Symbol</th>
+                    <th>Quantity</th>
+  
+                </tr>
+            </thead>
+            <tbody>
+                {% for portfolio in portfolios %}
+                <tr>
+                    <td>{{ portfolio.stock_symbol }}</td>
+                    <td>{{ portfolio.quantity }}</td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No stocks in portfolio.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
