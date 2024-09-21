@@ -6,7 +6,8 @@ from django.urls import reverse
 import random
 from .models import User, StockPortfolio
 from django.contrib.auth.decorators import login_required
-
+import requests
+import os
 
 
 
@@ -166,6 +167,16 @@ def get_name(request, receiver_account_number):
         return JsonResponse({'name': f"{receiver.first_name} {receiver.last_name}"})  
     except User.DoesNotExist:
         return JsonResponse({'name': None})  
+    
+def get_eur_price(request):
+    api_key = os.getenv('API_KEY')
+    url = f"https://api.exchangeratesapi.io/latest?access_key={api_key}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return JsonResponse(response.json())
+    else:
+        return JsonResponse({"error": "Error"}, status=500)    
 
 @login_required
 def eur_exchange(request):

@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (quoteButton) {
 
     quoteButton.addEventListener('click', () => {
-        fetch('https://api.exchangeratesapi.io/latest?access_key=cf0fd16b97736e34655275d658aa5731')
+        fetch(`/get_eur_price/`)
         .then(response => response.json())
         .then(data => {
 

@@ -16,6 +16,7 @@ urlpatterns = [
 
     # API Routes
     path("get_name/<str:receiver_account_number>", views.get_name, name="get_name"),
+    path("get_eur_price/", views.get_eur_price, name="get_eur_price"),
     path("get_stock_price/<str:symbol>", views.get_stock_price, name="get_stock_price")
 
 ]
