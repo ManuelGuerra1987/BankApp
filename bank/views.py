@@ -290,10 +290,21 @@ def stocks(request):
                        'portfolios': portfolios}) 
     
     if request.method == "POST": 
-        shares= int(request.POST.get('stock-shares'))
-        price= float(request.POST.get('stock-price'))
-        side= request.POST.get('side')
-        stock_symbol = request.POST.get('stock-symbol')
+
+        try:
+            shares= int(request.POST.get('stock-shares'))
+            price= float(request.POST.get('stock-price'))
+            side= request.POST.get('side')
+            stock_symbol = request.POST.get('stock-symbol')
+
+        except ValueError:    
+
+                message = "Missing data!"
+                portfolios = user.portfolios.all()  
+
+                return render(request, "bank/stocks.html", {'message': message,
+                                                            'portfolios': portfolios,
+                                                            'usd_account': usd_account})
 
         if side == "buy":
 
@@ -306,10 +317,9 @@ def stocks(request):
                                                             'portfolios': portfolios,
                                                             'usd_account': usd_account})
             
-
             else:
 
-                user.usd_account = float(usd_account) - shares  * price
+                user.usd_account = float(usd_account) - shares * price
                 user.save()
 
                 try:
@@ -322,9 +332,47 @@ def stocks(request):
                     portfolio_item.save() 
 
 
-                message = f"Purchased {shares} shares of {stock_symbol}." 
+                message = f"You have successfully bought {shares} shares of {stock_symbol}"
                 portfolios = user.portfolios.all()  
 
                 return render(request, "bank/stocks.html", {'message': message,
                                                             'portfolios': portfolios,
-                                                            'usd_account': usd_account})  
+                                                            'usd_account': usd_account}) 
+
+        if side == "sell": 
+
+            try:
+                portfolio_item = StockPortfolio.objects.get(user=user, stock_symbol=stock_symbol)
+
+                if shares > portfolio_item.quantity:
+
+                    message = "Not enought shares" 
+                    portfolios = user.portfolios.all()  
+
+                    return render(request, "bank/stocks.html", {'message': message,
+                                                                'portfolios': portfolios,
+                                                                'usd_account': usd_account}) 
+                
+                portfolio_item.quantity -= shares
+                portfolio_item.save()
+                user.usd_account = float(usd_account) + shares * price
+                user.save()
+
+                message = f"You have successfully sold {shares} shares of {stock_symbol}"
+                portfolios = user.portfolios.all()  
+
+                return render(request, "bank/stocks.html", {'message': message,
+                                                            'portfolios': portfolios,
+                                                            'usd_account': usd_account}) 
+
+            except StockPortfolio.DoesNotExist:
+
+                message = f"You do not own {stock_symbol} shares in your portfolio" 
+                portfolios = user.portfolios.all()  
+
+                return render(request, "bank/stocks.html", {'message': message,
+                                                            'portfolios': portfolios,
+                                                            'usd_account': usd_account})
+
+
+
