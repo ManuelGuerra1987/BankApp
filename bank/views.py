@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 import random
-from .models import User, StockPortfolio
+from .models import User, StockPortfolio, Transactions
 from django.contrib.auth.decorators import login_required
 import requests
 import os
@@ -78,7 +78,11 @@ def index(request):
         user= request.user
         usd_account = user.usd_account
         eur_account = user.eur_account
-        return render(request, "bank/index.html",{'usd_account': usd_account, 'eur_account': eur_account})
+        transactions = user.transactions.all().order_by('-timestamp')[:5]
+
+        return render(request, "bank/index.html",{'usd_account': usd_account,
+                                                   'eur_account': eur_account,
+                                                   'transactions': transactions})
 
     else:
         return  HttpResponseRedirect(reverse('login'))
@@ -97,6 +101,9 @@ def deposit(request):
         usd_account += new_deposit
         user.usd_account = usd_account
         user.save()
+
+        new_transaction = Transactions(user=user, description = f"Deposit of USD {new_deposit}")
+        new_transaction.save()
 
         return  HttpResponseRedirect(reverse('index'))
     
@@ -119,6 +126,9 @@ def withdraw(request):
         usd_account -= new_withdraw
         user.usd_account = usd_account
         user.save()
+
+        new_transaction = Transactions(user=user, description = f"Withdraw of USD {new_withdraw}")
+        new_transaction.save()
 
         return  HttpResponseRedirect(reverse('index'))    
 
@@ -155,6 +165,9 @@ def transfer(request):
         receiver = User.objects.get(account_number=account_number_receiver)
         receiver.usd_account = float(receiver.usd_account) + amount
         receiver.save()
+
+        new_transaction = Transactions(user=user, description = f"Transfer of USD {amount} to {receiver.username}")
+        new_transaction.save()
 
         return  HttpResponseRedirect(reverse('index'))   
     
@@ -221,6 +234,9 @@ def eur_exchange(request):
             user.eur_account = float(eur_account) + EUR_amount
             user.save()
 
+            new_transaction = Transactions(user=user, description = f"USD {amount_to_convert} converted to EUR")
+            new_transaction.save()
+
             return  HttpResponseRedirect(reverse('index'))     
 
         elif currency == "EURtoUSD":
@@ -237,6 +253,9 @@ def eur_exchange(request):
             user.eur_account = float(eur_account) - amount_to_convert
             user.usd_account = float(usd_account) + USD_amount
             user.save()
+
+            new_transaction = Transactions(user=user, description = f"EUR {amount_to_convert} converted to USD")
+            new_transaction.save()
 
             return  HttpResponseRedirect(reverse('index'))   
 
@@ -334,6 +353,8 @@ def stocks(request):
 
                 message = f"You have successfully bought {shares} shares of {stock_symbol}"
                 portfolios = user.portfolios.all()  
+                new_transaction = Transactions(user=user, description = f"Purchase of {shares} {stock_symbol} shares for a total amount of USD {shares * price}")
+                new_transaction.save()
 
                 return render(request, "bank/stocks.html", {'message': message,
                                                             'portfolios': portfolios,
@@ -361,6 +382,9 @@ def stocks(request):
                 message = f"You have successfully sold {shares} shares of {stock_symbol}"
                 portfolios = user.portfolios.all()  
 
+                new_transaction = Transactions(user=user, description = f"Sell of {shares} {stock_symbol} shares for a total amount of USD {shares * price}")
+                new_transaction.save()
+
                 return render(request, "bank/stocks.html", {'message': message,
                                                             'portfolios': portfolios,
                                                             'usd_account': usd_account}) 
@@ -373,6 +397,20 @@ def stocks(request):
                 return render(request, "bank/stocks.html", {'message': message,
                                                             'portfolios': portfolios,
                                                             'usd_account': usd_account})
+            
+
+
+
+@login_required
+def history(request):
+
+    user = request.user 
+
+    if request.method == "GET":    
+
+        transactions = user.transactions.all().order_by('-timestamp')
+        
+        return render(request, "bank/history.html", {'transactions': transactions})             
 
 
 

@@ -13,3 +13,8 @@ class StockPortfolio(models.Model):
     quantity = models.PositiveIntegerField(default=0)  
     purchase_price = models.DecimalField(decimal_places=2, max_digits=16)  
     date_acquired = models.DateField(auto_now_add=True)     
+
+class Transactions(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')    
+    description = models.CharField(max_length=60)
+    timestamp = models.DateTimeField(auto_now_add=True)  

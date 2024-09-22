@@ -6,7 +6,7 @@
     border-radius: 10px; /* Bordes redondeados para un efecto más suave */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
  
 }
 
@@ -56,5 +56,42 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
     max-width: 600px;
+ 
+}
+
+.history {
+    background-color: #e5e5eeab; 
+    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
+    padding: 5px;
+   
+    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+    width: 100%;
+    max-width: 900px;
+ 
+}
+
+table {
+    width: 95%;
+    border-collapse: collapse; /* Asegura que no haya espacios entre las celdas y el borde */
+}
+th, td {
+    padding: 8px; /* Añade un poco de espacio interno a las celdas */
+    border: 1px solid black; /* Añade una línea negra alrededor de cada celda */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+th {
+    background-color: #f2f2f2; /* Añade un color de fondo para los encabezados de la tabla */
+}
+
+.historyIndex {
+    background-color: #e5e5eeab; 
+    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
+    padding: 5px;
+   
+    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+    width: 100%;
+    max-width: 800px;
  
 }
