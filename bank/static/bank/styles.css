@@ -1,21 +1,37 @@
-.account-balance {
-    background-color: #e5e5eeab; 
-    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
-    padding: 5px;
-   
-    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
-    width: 100%;
-    max-width: 800px;
- 
+.custom-navbar {
+    background-color: #e96d1a; 
+  }
+
+.custom-btn {
+    background-color: #e96d1a; 
+    color: white; /* Color del texto */
+    border: none; /* Eliminar borde (opcional) */
+    width: 120px;
+}  
+
+.custom-btn:hover {
+    background-color: #ec4918; 
+    color: white;
 }
 
+.custom-link {
+    color: #ec4918; 
+    text-decoration: none;
+}
+
+
+
+.container {
+    display: flex;
+    justify-content: center; /* Centra el div horizontalmente */
+ 
+}
 
 .login {
     background-color: #e5e5eeab; 
     border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
     padding: 5px;
-   
+    text-align: center;
     border-radius: 10px; /* Bordes redondeados para un efecto más suave */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
@@ -27,7 +43,7 @@
     background-color: #e5e5eeab; 
     border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
     padding: 5px;
-   
+    text-align: center;
     border-radius: 10px; /* Bordes redondeados para un efecto más suave */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
@@ -35,11 +51,35 @@
     
 }
 
+
+.account-balance {
+    background-color: #e5e5eeab; 
+    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
+    padding: 5px;  
+    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+    width: 100%;
+    max-width: 800px;
+ 
+}
+
+.account-balance-2 {
+    color: black;
+    background-color:  #dfb89f; 
+    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
+    padding: 5px;  
+    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+    width: 100%;
+    max-width: 750px;
+ 
+}
+
+
 .transfer {
     background-color: #e5e5eeab; 
     border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
-    padding: 5px;
-   
+    padding: 5px; 
     border-radius: 10px; /* Bordes redondeados para un efecto más suave */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
@@ -50,8 +90,7 @@
 .stocks {
     background-color: #e5e5eeab; 
     border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
-    padding: 5px;
-   
+    padding: 5px; 
     border-radius: 10px; /* Bordes redondeados para un efecto más suave */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
@@ -62,8 +101,7 @@
 .history {
     background-color: #e5e5eeab; 
     border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
-    padding: 5px;
-   
+    padding: 5px; 
     border-radius: 10px; /* Bordes redondeados para un efecto más suave */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
     width: 100%;
@@ -79,9 +117,10 @@ th, td {
     padding: 8px; /* Añade un poco de espacio interno a las celdas */
     border: 1px solid black; /* Añade una línea negra alrededor de cada celda */
     text-align: left; /* Alinea el texto a la izquierda */
+    background-color:  #dfb89f; 
 }
 th {
-    background-color: #f2f2f2; /* Añade un color de fondo para los encabezados de la tabla */
+    background-color:  #dfb89f; 
 }
 
 .historyIndex {
@@ -94,4 +133,44 @@ th {
     width: 100%;
     max-width: 800px;
  
+}
+
+
+.adv_row{
+    display: flex;
+    flex-direction: row;
+    align-items: right;
+    
+}
+
+.adv_left{
+    width: 80px;
+    margin-top: 5px;
+}
+
+.adv_right{
+    width: 420px;
+    margin-top: 5px;
+}
+
+
+.custom-bg {
+    background-color: #f08f11; 
+    color: rgb(20, 4, 4); 
+}
+
+.custom-bg:hover {
+    background-color:#966c35; 
+    color:  rgb(20, 4, 4); 
+}
+
+.message {
+    background-color: #1adb7b; 
+    color:  rgb(20, 4, 4); 
+    border: 1px solid #132f33; /* Borde de un color más oscuro para dar contraste */
+    padding: 5px;
+    border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+    width: 100%;
+    max-width: 600px;
 }

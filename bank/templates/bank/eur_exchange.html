@@ -3,15 +3,17 @@
 {% block body %}
 
     {% if message %}
-    <p>{{message}}</p>
+    <div class="message">
+        <p>{{message}}</p>
+        </div>
     {% endif %}
     <div class="transfer">
-        <p>EUR exchange</p>
+        <h3>EUR exchange</h3>
         <p>Available balance: USD {{usd_account}}</p>
         <p>Available balance: EUR {{eur_account}}</p>
         
             <p id="eur_quote">EUR/USD:  </p>
-            <button id="eur_quote_button" type="submit" >Quote</button>
+            <button class="btn custom-btn" id="eur_quote_button" type="submit" >Quote</button>
             <br><br>    
         
         <form action="{% url 'eur_exchange' %}" method="post">
@@ -29,7 +31,7 @@
             <input type="hidden" id="exchange_rate_hidden" name="exchange_rate_hidden">
 
             <br><br>    
-            <button type="submit" >Convert</button>
+            <button class="btn custom-btn" type="submit" >Convert</button>
 
         </form>    
     </div>

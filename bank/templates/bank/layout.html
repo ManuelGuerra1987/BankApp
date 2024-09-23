@@ -10,8 +10,8 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Bank</a>
+        <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+            <a class="navbar-brand" href="#">BankApp</a>
           
             <div>
               <ul class="navbar-nav mr-auto">
@@ -44,16 +44,16 @@
                 <!-- Sidebar -->
                 {% if user.is_authenticated %}
                 <div class="col-md-2">
-                    <div class="bg-light border-right" id="sidebar-wrapper">
+                    <div class="custom-sidebar border-right" id="sidebar-wrapper">
                         
-                        <div class="list-group list-group-flush">
-                            <a href="{% url 'index' %}" class="list-group-item list-group-item-action bg-light">Home</a>
-                            <a href="{% url 'deposit' %}" class="list-group-item list-group-item-action bg-light">Deposit</a>
-                            <a href="{% url 'withdraw' %}" class="list-group-item list-group-item-action bg-light">Withdraw</a>
-                            <a href="{% url 'transfer' %}" class="list-group-item list-group-item-action bg-light">Transfer</a>
-                            <a href="{% url 'eur_exchange' %}" class="list-group-item list-group-item-action bg-light">Currency Exchange</a>
-                            <a href="{% url 'stocks' %}" class="list-group-item list-group-item-action bg-light">Stocks trading</a>
-                            <a href="{% url 'history' %}" class="list-group-item list-group-item-action bg-light">Transaction history</a>
+                        <div >
+                            <a href="{% url 'index' %}" class="list-group-item list-group-item-action custom-bg">Home</a>
+                            <a href="{% url 'deposit' %}" class="list-group-item list-group-item-action custom-bg">Deposit</a>
+                            <a href="{% url 'withdraw' %}" class="list-group-item list-group-item-action custom-bg">Withdraw</a>
+                            <a href="{% url 'transfer' %}" class="list-group-item list-group-item-action custom-bg">Transfer</a>
+                            <a href="{% url 'eur_exchange' %}" class="list-group-item list-group-item-action custom-bg">Currency Exchange</a>
+                            <a href="{% url 'stocks' %}" class="list-group-item list-group-item-action custom-bg">Stocks trading</a>
+                            <a href="{% url 'history' %}" class="list-group-item list-group-item-action custom-bg">Transaction history</a>
                         </div>
                     </div>
                 </div>

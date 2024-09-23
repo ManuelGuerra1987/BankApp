@@ -3,11 +3,13 @@
 {% block body %}
 
     {% if message %}
-    <p>{{message}}</p>
+    <div class="message">
+        <p>{{message}}</p>
+        </div>
     {% endif %}
     <div class="transfer">
-        <p>Transfer money</p>
-        <p>Available balance: USD{{usd_account}}</p>
+        <h3>Transfer money</h3>
+        <p>Available balance: USD {{usd_account}}</p>
         <form action="{% url 'transfer' %}" method="post">
             {% csrf_token %} 
             <label for="transfer-sender">Sender Account Number:</label><br>
@@ -19,6 +21,6 @@
             <label for="transfer-amount">Amount:</label><br>
             <input type="text" id="transfer-amount" name="transfer-amount" placeholder="$" min="0" step="0.01" required>
             <br><br>    
-            <button type="submit" >Done</button>
+            <button class="btn custom-btn" type="submit" >Done</button>
     </div>
 {% endblock %}

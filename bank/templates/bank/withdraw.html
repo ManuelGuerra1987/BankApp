@@ -1,6 +1,13 @@
 {% extends "bank/layout.html" %}
 
 {% block body %}
+
+    {% if message %}
+    <div class="message">
+        <p>{{message}}</p>
+        </div>
+    {% endif %}
+    
     <div class="withdraw">
         <p>Withdraw money from your account</p>
         {% if message %}
@@ -10,6 +17,6 @@
             {% csrf_token %} 
         
             <input name="new_withdraw" placeholder="$" type="text">
-            <button type="submit" >Withdraw</button>
+            <button class="btn custom-btn" type="submit" >Withdraw</button>
     </div>
 {% endblock %}

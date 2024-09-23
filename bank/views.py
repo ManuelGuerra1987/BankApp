@@ -105,7 +105,9 @@ def deposit(request):
         new_transaction = Transactions(user=user, description = f"Deposit of USD {new_deposit}")
         new_transaction.save()
 
-        return  HttpResponseRedirect(reverse('index'))
+        message = f"You have successfully deposited USD {new_deposit}!" 
+
+        return render(request, "bank/deposit.html", {'message': message}) 
     
 
 @login_required
@@ -130,7 +132,9 @@ def withdraw(request):
         new_transaction = Transactions(user=user, description = f"Withdraw of USD {new_withdraw}")
         new_transaction.save()
 
-        return  HttpResponseRedirect(reverse('index'))    
+        message = f"You have successfully withdrew USD {new_withdraw}!" 
+
+        return render(request, "bank/withdraw.html", {'message': message}) 
 
 
 @login_required
@@ -169,7 +173,12 @@ def transfer(request):
         new_transaction = Transactions(user=user, description = f"Transfer of USD {amount} to {receiver.username}")
         new_transaction.save()
 
-        return  HttpResponseRedirect(reverse('index'))   
+        message = f"You have successfully transfered USD {amount} to {receiver.username}!" 
+
+        return render(request, "bank/transfer.html", 
+                      {'account_number': account_number, 
+                       'usd_account': usd_account,
+                       'message': message})  
     
 
 @login_required
@@ -351,7 +360,7 @@ def stocks(request):
                     portfolio_item.save() 
 
 
-                message = f"You have successfully bought {shares} shares of {stock_symbol}"
+                message = f"You have successfully bought {shares} shares of {stock_symbol}!"
                 portfolios = user.portfolios.all()  
                 new_transaction = Transactions(user=user, description = f"Purchase of {shares} {stock_symbol} shares for a total amount of USD {shares * price}")
                 new_transaction.save()
@@ -379,7 +388,7 @@ def stocks(request):
                 user.usd_account = float(usd_account) + shares * price
                 user.save()
 
-                message = f"You have successfully sold {shares} shares of {stock_symbol}"
+                message = f"You have successfully sold {shares} shares of {stock_symbol}!"
                 portfolios = user.portfolios.all()  
 
                 new_transaction = Transactions(user=user, description = f"Sell of {shares} {stock_symbol} shares for a total amount of USD {shares * price}")
