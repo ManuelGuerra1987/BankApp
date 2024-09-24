@@ -8,11 +8,10 @@
         </div>
     {% endif %}
     
-    <div class="withdraw">
-        <p>Withdraw money from your account</p>
-        {% if message %}
-        <p>{{message}}</p>
-        {% endif %}
+    <div class="section-container">
+        <h3>Withdraw money from your account</h3>
+        <br>
+
         <form action="{% url 'withdraw' %}" method="post">
             {% csrf_token %} 
         

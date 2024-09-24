@@ -7,9 +7,11 @@
         <p>{{message}}</p>
         </div>
     {% endif %}
-    <div class="transfer">
+
+    <div class="section-container">
         <h3>Transfer money</h3>
         <p>Available balance: USD {{usd_account}}</p>
+        
         <form action="{% url 'transfer' %}" method="post">
             {% csrf_token %} 
             <label for="transfer-sender">Sender Account Number:</label><br>

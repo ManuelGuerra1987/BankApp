@@ -8,8 +8,10 @@
         </div>
     {% endif %}
 
-    <div class="deposit">
-        <p>Add money to your account</p>
+    <div class="section-container">
+        <h3>Add money to your account</h3>
+        <br>
+       
         <form action="{% url 'deposit' %}" method="post">
             {% csrf_token %} 
         

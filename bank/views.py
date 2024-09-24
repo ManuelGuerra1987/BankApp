@@ -173,6 +173,9 @@ def transfer(request):
         new_transaction = Transactions(user=user, description = f"Transfer of USD {amount} to {receiver.username}")
         new_transaction.save()
 
+        new_transaction_2 = Transactions(user=receiver, description = f"Transfer of USD {amount} from {user.username}")
+        new_transaction_2.save()
+
         message = f"You have successfully transfered USD {amount} to {receiver.username}!" 
 
         return render(request, "bank/transfer.html", 
@@ -189,7 +192,8 @@ def get_name(request, receiver_account_number):
         return JsonResponse({'name': f"{receiver.first_name} {receiver.last_name}"})  
     except User.DoesNotExist:
         return JsonResponse({'name': None})  
-    
+
+@login_required    
 def get_eur_price(request):
     api_key = os.getenv('API_KEY')
     url = f"https://api.exchangeratesapi.io/latest?access_key={api_key}"
