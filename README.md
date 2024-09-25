@@ -4,6 +4,8 @@
 
 This project is a web application developed using Django on the back-end and JavaScript on the front-end that simulates banking functionalities, allowing users to manage their accounts, make deposits and withdrawals, transfer money, and trade stocks. The application features a user-friendly interface for managing accounts in both USD and EUR, with real-time exchange rates and transaction history.
 
+![GIF](https://github.com/ManuelGuerra1987/BankApp/blob/main/Bank.gif)
+
 ## Features
 
 - **User Authentication:** Users can register, log in, and log out. Each user has a unique account number.
